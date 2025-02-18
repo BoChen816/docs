@@ -3,33 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>簡單便籤 (Sprint 1)</title>
+    <title>簡單便籤 (Sprint 2 - 多頁便籤)</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f7f7f7; text-align: center; }
-        .note-container { width: 100%; min-height: 300px; background: white; border-radius: 10px; box-shadow: 0px 2px 4px rgba(0,0,0,0.1); padding: 20px; text-align: left; cursor: text; }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; background-color: #f7f7f7; display: flex; }
+        .note-list-container { width: 30%; padding: 10px; background: #ffffff; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0,0,0,0.1); text-align: left; }
+        .note-list { list-style: none; padding: 0; margin: 0; }
+        .note-list li { cursor: pointer; padding: 10px; border-bottom: 1px solid #ddd; }
+        .note-list li:hover { background: #f0f0f0; }
+        .note-container { width: 70%; min-height: 300px; background: white; border-radius: 10px; box-shadow: 0px 2px 4px rgba(0,0,0,0.1); padding: 20px; margin-left: 20px; text-align: left; cursor: text; }
         .placeholder { color: #aaa; }
-        .note-content { font-size: 16px; outline: none; min-height: 20px; }
-        .delete { background: none; border: none; color: red; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .note-content { font-size: 16px; outline: none; min-height: 300px; width: 100%; cursor: text; }
+        .buttons { margin-top: 10px; }
+        .delete, .new-note { background: none; border: none; font-size: 16px; cursor: pointer; margin-right: 10px; }
+        .new-note { color: green; }
+        .delete { color: red; }
     </style>
 </head>
 <body>
 
-    <h1>簡單便籤</h1>
-    <div class="note-container" id="noteContainer" onclick="activateInput()">
-        <div class="note-content placeholder" id="noteContent">點擊輸入便籤...</div>
+    <div class="note-list-container">
+        <h2>便籤列表</h2>
+        <ul id="noteList" class="note-list"></ul>
     </div>
-    <button class="delete" onclick="deleteNote()">X 刪除</button>
+
+    <div class="note-container" id="noteContainer" onclick="activateInput()">
+        <div class="note-content placeholder" id="noteContent" contenteditable="true">點擊輸入便籤...</div>
+    </div>
+
+    <div class="buttons">
+        <button class="new-note" onclick="createNewNote()">➕ 新便籤</button>
+        <button class="delete" onclick="deleteNote()">X 刪除</button>
+    </div>
 
     <script>
+        let currentNoteId = Date.now().toString();
+
         function activateInput() {
             const noteContent = document.getElementById("noteContent");
             if (noteContent.classList.contains("placeholder")) {
-                noteContent.innerHTML = "";
+                noteContent.innerText = "";
                 noteContent.classList.remove("placeholder");
             }
-            noteContent.contentEditable = "true";
             noteContent.focus();
         }
+
+        document.getElementById("noteContainer").addEventListener("click", function () {
+            activateInput();
+        });
 
         document.getElementById("noteContent").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -42,26 +62,47 @@
             const noteContent = document.getElementById("noteContent");
             const text = noteContent.innerText.trim();
             if (!text) return;
-            localStorage.setItem("note", text);
-            noteContent.contentEditable = "false";
+
+            localStorage.setItem(`note_${currentNoteId}`, text);
+            loadNoteList();
         }
 
-        function deleteNote() {
-            localStorage.removeItem("note");
+        function createNewNote() {
+            saveNote();
+            currentNoteId = Date.now().toString();
             document.getElementById("noteContent").innerText = "點擊輸入便籤...";
             document.getElementById("noteContent").classList.add("placeholder");
         }
 
-        function loadNote() {
-            const savedNote = localStorage.getItem("note");
-            if (savedNote) {
-                const noteContent = document.getElementById("noteContent");
-                noteContent.innerText = savedNote;
-                noteContent.contentEditable = "false";
+        function deleteNote() {
+            localStorage.removeItem(`note_${currentNoteId}`);
+            document.getElementById("noteContent").innerText = "點擊輸入便籤...";
+            document.getElementById("noteContent").classList.add("placeholder");
+            loadNoteList();
+        }
+
+        function loadNoteList() {
+            const noteList = document.getElementById("noteList");
+            noteList.innerHTML = "";
+            for (let key in localStorage) {
+                if (key.startsWith("note_")) {
+                    let noteId = key.replace("note_", "");
+                    let noteText = localStorage.getItem(key);
+                    let li = document.createElement("li");
+                    li.innerText = noteText.substring(0, 15) + "...";
+                    li.onclick = () => loadNote(noteId);
+                    noteList.appendChild(li);
+                }
             }
         }
 
-        loadNote();
+        function loadNote(noteId) {
+            currentNoteId = noteId;
+            document.getElementById("noteContent").innerText = localStorage.getItem(`note_${noteId}`);
+            document.getElementById("noteContent").classList.remove("placeholder");
+        }
+
+        loadNoteList();
     </script>
 
 </body>
