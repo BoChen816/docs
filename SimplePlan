@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>簡單便籤 (Sprint 2 - 多頁便籤)</title>
+    <title>簡單便籤 (Sprint 3 - 日曆選單提醒功能)</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; background-color: #f7f7f7; display: flex; }
         .note-list-container { width: 30%; padding: 10px; background: #ffffff; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0,0,0,0.1); text-align: left; }
@@ -14,9 +14,11 @@
         .placeholder { color: #aaa; }
         .note-content { font-size: 16px; outline: none; min-height: 300px; width: 100%; cursor: text; }
         .buttons { margin-top: 10px; }
-        .delete, .new-note { background: none; border: none; font-size: 16px; cursor: pointer; margin-right: 10px; }
+        .delete, .new-note, .reminder { background: none; border: none; font-size: 16px; cursor: pointer; margin-right: 10px; }
         .new-note { color: green; }
         .delete { color: red; }
+        .reminder { color: #ff4500; }
+        .reminder-container { margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -31,8 +33,15 @@
     </div>
 
     <div class="buttons">
+        <button class="reminder" onclick="showReminderPicker()">🔔 設定提醒</button>
         <button class="new-note" onclick="createNewNote()">➕ 新便籤</button>
         <button class="delete" onclick="deleteNote()">X 刪除</button>
+    </div>
+
+    <div class="reminder-container" id="reminderContainer" style="display:none;">
+        <label for="reminderTime">選擇提醒時間：</label>
+        <input type="datetime-local" id="reminderTime">
+        <button onclick="setReminder()">確定</button>
     </div>
 
     <script>
@@ -46,10 +55,6 @@
             }
             noteContent.focus();
         }
-
-        document.getElementById("noteContainer").addEventListener("click", function () {
-            activateInput();
-        });
 
         document.getElementById("noteContent").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
@@ -76,6 +81,7 @@
 
         function deleteNote() {
             localStorage.removeItem(`note_${currentNoteId}`);
+            localStorage.removeItem(`reminder_${currentNoteId}`);
             document.getElementById("noteContent").innerText = "點擊輸入便籤...";
             document.getElementById("noteContent").classList.add("placeholder");
             loadNoteList();
@@ -100,6 +106,39 @@
             currentNoteId = noteId;
             document.getElementById("noteContent").innerText = localStorage.getItem(`note_${noteId}`);
             document.getElementById("noteContent").classList.remove("placeholder");
+        }
+
+        function showReminderPicker() {
+            document.getElementById("reminderContainer").style.display = "block";
+        }
+
+        function setReminder() {
+            let reminderTime = document.getElementById("reminderTime").value;
+            if (!reminderTime) {
+                alert("⚠️ 請選擇提醒時間！");
+                return;
+            }
+
+            let reminderTimestamp = new Date(reminderTime).getTime();
+            if (isNaN(reminderTimestamp)) {
+                alert("⚠️ 請選擇正確的日期與時間！");
+                return;
+            }
+
+            localStorage.setItem(`reminder_${currentNoteId}`, reminderTimestamp);
+            alert(`🔔 提醒已設定：${reminderTime}`);
+
+            let now = new Date().getTime();
+            let delay = reminderTimestamp - now;
+            if (delay > 0) {
+                setTimeout(() => {
+                    alert(`🔔 提醒時間到！內容：${localStorage.getItem(`note_${currentNoteId}`)}`);
+                }, delay);
+            } else {
+                alert("⚠️ 設定時間必須是未來的時間！");
+            }
+
+            document.getElementById("reminderContainer").style.display = "none";
         }
 
         loadNoteList();
