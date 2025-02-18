@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡單便籤 (Sprint 1)</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f7f7f7; text-align: center; }
+        .note-container { width: 100%; min-height: 300px; background: white; border-radius: 10px; box-shadow: 0px 2px 4px rgba(0,0,0,0.1); padding: 20px; text-align: left; cursor: text; }
+        .placeholder { color: #aaa; }
+        .note-content { font-size: 16px; outline: none; min-height: 20px; }
+        .delete { background: none; border: none; color: red; font-size: 16px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>簡單便籤</h1>
+    <div class="note-container" id="noteContainer" onclick="activateInput()">
+        <div class="note-content placeholder" id="noteContent">點擊輸入便籤...</div>
+    </div>
+    <button class="delete" onclick="deleteNote()">X 刪除</button>
+
+    <script>
+        function activateInput() {
+            const noteContent = document.getElementById("noteContent");
+            if (noteContent.classList.contains("placeholder")) {
+                noteContent.innerHTML = "";
+                noteContent.classList.remove("placeholder");
+            }
+            noteContent.contentEditable = "true";
+            noteContent.focus();
+        }
+
+        document.getElementById("noteContent").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                saveNote();
+            }
+        });
+
+        function saveNote() {
+            const noteContent = document.getElementById("noteContent");
+            const text = noteContent.innerText.trim();
+            if (!text) return;
+            localStorage.setItem("note", text);
+            noteContent.contentEditable = "false";
+        }
+
+        function deleteNote() {
+            localStorage.removeItem("note");
+            document.getElementById("noteContent").innerText = "點擊輸入便籤...";
+            document.getElementById("noteContent").classList.add("placeholder");
+        }
+
+        function loadNote() {
+            const savedNote = localStorage.getItem("note");
+            if (savedNote) {
+                const noteContent = document.getElementById("noteContent");
+                noteContent.innerText = savedNote;
+                noteContent.contentEditable = "false";
+            }
+        }
+
+        loadNote();
+    </script>
+
+</body>
+</html>
