@@ -10,18 +10,21 @@
   
   <style>
     html, body {
-      font-family: '微軟正黑體' ;
+      font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
       margin: 0;
       padding: 0;
-      color: 	#3C3C3C;
-      background-color:		#FDFFFF;
+      color: #4A4A4A;
+      background-color: #FAFAFA;
     }
 
-    /* header */
     header {
       height: 60px;
-      color: #666666;
-      box-shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
+      color: #555;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      background: #FFFFFF;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     nav {
@@ -37,13 +40,10 @@
     .nav-tittle {
       font-weight: bold;
       letter-spacing: 1px;
+      font-size: 18px;
+      color: #669999;
     }
 
-    .nav-link {
-      color: #666666;
-    }
-
-    /* main */
     main {
       max-width: 780px;
       margin: 0 auto;
@@ -51,60 +51,74 @@
     }
 
     h2 {
-      font-size: 30px;
-      margin: 24px 0 8px;
+      font-size: 26px;
+      margin: 24px 0 16px;
+      color: #669999;
+      border-left: 4px solid #A8C3BC;
+      padding-left: 10px;
     }
 
     h3 {
       font-size: 20px;
       margin: 0 0 8px;
-      font-weight: 500;
-    }
-
-    section {
-      margin-bottom: 48px;
-    }
-    
-    section h2{
-      color: 	#336666;
+      font-weight: 600;
+      color: #555;
     }
 
     p {
-      color: 	#272727;
+      color: #555;
       font-size: 14px;
       line-height: 2;
     }
 
-    /* personal info */
+    section {
+      margin-bottom: 48px;
+      background: #FFFFFF;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+
     .avatar {
       text-align: center;
     }
 
     .avatar-img {
-      width:150px;
-      height:150px;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
       border-radius: 50%;
+      border: 2px solid #A8C3BC;
     }
 
     .name {
       text-align: center;
       font-size: 32px;
-      margin: 20px 0;
+      margin: 20px 0 10px;
+      color: #444;
     }
 
     .social-media {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .social-media-link {
-      color: #999999;
+      color: #999;
       text-decoration: none;
-      margin: 0 5px;
+      margin: 0 10px;
+      transition: color 0.3s, transform 0.3s;
     }
 
     .social-media-link:hover {
-      color: #ff6600;
+      color: #FF9966;
+      transform: scale(1.2);
     }
 
     .tittle {
@@ -112,82 +126,87 @@
       text-align: center;
       font-size: 18px;
       letter-spacing: 2px;
-      color: 	#336666;
+      color: #669999;
     }
 
-    /* skill-section */
-    
-    .skills {
+    .skills, .Certificate {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap; /* 小螢幕時換行 */
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    .skill {
-      width: 45%;
-      min-width: 200px;
+    .skill, .Cert {
+      flex: 1 1 45%;
+      min-width: 250px;
+      background: #F5F5F5;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: transform 0.3s;
     }
 
-    .skill-name {
-      border-top: 1px solid #999999;
-      padding-top: 16px;
+    .skill:hover, .Cert:hover {
+      transform: translateY(-5px);
     }
-    
-  
-    /* Experience */
+
+    .skill-name, .Cert-name {
+      font-size: 18px;
+      color: #669999;
+      margin-bottom: 10px;
+    }
+
+    .project {
+      margin-bottom: 40px;
+    }
+
+    .project-name {
+      font-size: 20px;
+      color: #669999;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .project-name:hover {
+      color: #FF9966;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
     hr {
-      border: 0px;
+      border: none;
       height: 1px;
-      background-color: #cccccc;
+      background-color: #ddd;
       margin: 20px 0;
     }
 
-    .company, .duration {
-      color: #666666;
-      font-size: 12px;
-      margin-right: 20px;
+    @media (max-width: 600px) {
+      .skills, .Certificate {
+        flex-direction: column;
+      }
+      .skill, .Cert {
+        width: 100%;
+      }
     }
-
-    .fa-building, .fa-calendar-days {
-      margin-right: 5px;
-    }
-    
-      /* Certificate-section */
-    
-    .Certificate {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap; /* 小螢幕時換行 */
-    }
-
-    .Cert {
-      width: 25%;
-      min-width: 200px;
-    }
-
-    .Cert-name {
-      padding-top: 16px;
-      font-size: 18px;
-    }
-    
   </style>
 </head>
 
 <body>
-  <!-- 網站標頭 -->
   <header>
     <nav>
       <span class="nav-tittle">陳冠伯｜個人簡介</span>
-      </a>
     </nav>
   </header>
 
-  <!-- 網站主內容 -->
   <main>
-    <!-- 人物介紹 -->
     <section class="personal-info">
       <div class="avatar">
-        <img class="avatar-img" src="https://i.imgur.com/fCUoixx.jpg" alt="大頭照">
+        <img class="avatar-img" src="https://i.imgur.com/9kf53HA.jpeg" alt="大頭照">
       </div>
       <h1 class="name">陳冠伯</h1>
       <div class="social-media">
@@ -198,85 +217,55 @@
           <i class="fa-regular fa-envelope fa-lg"></i>
         </a>
       </div>
-
       <div class="tittle">UIUX｜產品經理｜台北台灣</div>
-
-      <p class="description">
+      <p>
         具備 5 年以上專案管理與市場企劃經驗，專長於需求分析、跨部門協作與專案執行，能整合資源並有效推動計畫。<br>
         過去負責能源局計畫及樂器商品開發，累積豐富的策略制定與執行能力。因長期處理需求分析與跨部門合作，培養將用戶需求轉化為產品規劃的能力，並學習設計思維與敏捷開發，透過自主專案深化產品思維。<br>
         同時具備前端開發（HTML/CSS/JavaScript）與 UX 設計基礎，能與技術團隊高效溝通，確保產品需求與開發成果一致。期望轉型為產品經理，推動產品成長。
       </p>
     </section>
 
-    <!-- 專業技能 -->
     <section class="skill-section">
       <h2>專業技能</h2>
       <div class="skills">
         <div class="skill">
           <h3 class="skill-name">程式設計入門</h3>
-          <p class="skill-description">
-            熟悉 HTML、CSS、JavaScript，設計並開發具響應式特性的網站。<br>
-            理解基本 DOM 操作、表單驗證及與 API 的基礎整合。<br>
-            與工程團隊無縫溝通，確保技術需求順利落地。
-          </p>
+          <p>熟悉 HTML、CSS、JavaScript，設計並開發具響應式特性的網站。理解基本 DOM 操作、表單驗證及與 API 的基礎整合。與工程團隊無縫溝通，確保技術需求順利落地。</p>
         </div>
-
         <div class="skill">
           <h3 class="skill-name">設計思維與使用者體驗</h3>
-          <p class="skill-description">
-            掌握設計思維與用戶研究方法。<br>
-            規劃線框圖、用戶旅程。<br>
-            進行可用性測試，持續優化用戶體驗。<br>
-            通過 UX 三刀流課程認證。
-          </p>
+          <p>掌握設計思維與用戶研究方法，規劃線框圖、用戶旅程。進行可用性測試，持續優化用戶體驗。通過 UX 三刀流課程認證。</p>
         </div>
-
         <div class="skill">
           <h3 class="skill-name">商品策略</h3>
-          <p class="skill-description">
-            蒐集市場數據、競爭分析和用戶行為洞察。<br>
-            制定有利於專案和產品發展的策略。<br>
-            透過數據分析支持決策，確保策略具可行性與效益。
-          </p>
+          <p>蒐集市場數據、競爭分析和用戶行為洞察。制定有利於專案和產品發展的策略。透過數據分析支持決策，確保策略具可行性與效益。</p>
         </div>
-      
-      <div class="skill">
+        <div class="skill">
           <h3 class="skill-name">專案管理</h3>
-          <p class="skill-description">
-            從需求分析到執行監控的全流程管理經驗。
-<br>
-            專案計畫、資源分配、進度控管及風險管理。
-          </p>
+          <p>從需求分析到執行監控的全流程管理經驗。專案計畫、資源分配、進度控管及風險管理。</p>
         </div>
       </div>
     </section>
 
-    <!-- 工作經歷 -->
     <section class="experience-section">
-      <h2 class="job-experience">工作經歷</h2>
+      <h2>工作經歷</h2>
+      <hr>
+      <div class="experience-item">
+        <h3 class="job-title">商品企劃</h3>
+        <span class="company"><i class="fa-regular fa-building"></i>功學社音樂中心</span>
+        <span class="duration"><i class="fa-solid fa-calendar-days"></i>2023年6月 - 至今</span>
+        <p>
+          價格策略制定：分析市場趨勢、蒐集競爭者資訊，擬定有利於公司收益的價格策略，平衡市場競爭與利潤。<br>
+          促銷與活動企劃：規劃商品促銷檔期及專業講座活動，負責可行性評估、進度掌控及最終測試驗收。<br>
+          產品開發與優化：依據用戶反饋與數據分析，持續營運現有產品並規劃新一代產品，滿足市場需求。<br>
+          通路拓展：透過線上行銷與講座活動帶動客流，提升品牌知名度及產品銷量。<br>
+          重要專案成果：成功導入策略商品，有效提高客單價5%；透過春節促銷活動帶動配件類商品業績成長10%。
+        </p>
+      </div>
+
+      <hr>
       
-<hr>
-      
-      <div class="experience">
-        <div class="experience-item">
-          <h3 class="job-title">商品企劃</h3>
-          <span class="company"><i class="fa-regular fa-building"></i>功學社音樂中心</span>
-          <span class="duration"><i class="fa-solid fa-calendar-days"></i>2023年6月 - 至今</span>
-          <p>
-            價格策略制定：分析市場趨勢、蒐集競爭者資訊，擬定有利於公司收益的價格策略，平衡市場競爭與利潤。<br>
-            促銷與活動企劃：規劃商品促銷檔期及專業講座活動，負責可行性評估、進度掌控及最終測試驗收。<br>
-            產品開發與優化：依據用戶反饋與數據分析，持續營運現有產品並規劃新一代產品，滿足市場需求。<br>
-            通路拓展：透過線上行銷與講座活動帶動客流，提升品牌知名度及產品銷量。<br>
-            重要專案成果<br>
-            引進策略商品：成功導入策略商品，有效提高客單價5%。<br>
-            春節促銷活動：透過「1+1抽折扣活動」，帶動配件類商品業績成長10%。
-
-          </p>
-        </div>
-
-        <hr>
-
-        <div class="experience-item">
+      <div class="experience-item">
           <h3 class="job-title">綠能推動專員</h3>
           <span class="company"><i class="fa-regular fa-building"></i>台灣再生能源推動聯盟</span>
           <span class="duration"><i class="fa-solid fa-calendar-days"></i>2018年 8月 - 2023年5月</span>
@@ -319,19 +308,15 @@
         </div>
       </div>
     </section>
-    
-    <!-- 專案與作品集 -->
+
     <section class="SideProject-section">
-       <h2>專案與作品集</h2>
-      
-        <hr>
-      
-      <div class="SideProjects">
-        <div class="project">
-         <a href="https://www.figma.com/design/CbqHOSAq6mMaDcEZZQlqH0/windows%E8%87%AA%E9%BB%8F%E4%BE%BF%E7%B1%A4%E5%84%AA%E5%8C%96?node-id=0-1&m=dev&t=DwTl97DCewNkpGGG-1" target="_blank">
-  <h3 class="project-name">模擬專案 - Windows 自黏便籤優化</h3>
-</a>
-          <p class="project-description">
+      <h2>專案與作品集</h2>
+      <hr>
+      <div class="project">
+        <a href="https://www.figma.com/design/CbqHOSAq6mMaDcEZZQlqH0/windows%E8%87%AA%E9%BB%8F%E4%BE%BF%E7%B1%A4%E5%84%AA%E5%8C%96" target="_blank">
+          <h3 class="project-name">模擬專案 - Windows 自黏便籤優化</h3>
+        </a>
+         <p class="project-description">
             專案背景：<br>Windows 自黏便籤是許多用戶依賴的筆記工具，但缺乏「提醒功能」，限制了在時間管理和待辦事項追蹤上的應用。本專案針對此痛點進行優化。<br><br>
             專案目標：<br>
             新增提醒功能：支援時間通知、修改與刪除提醒，提高便籤的實用性。<br>
@@ -347,17 +332,8 @@
             設計工具：Figma（User Flow、Wireframe）<br>
             開發流程：Scrum 方式規劃迭代
           </p>
-        </div>
-        
-        <div class="project">
-          <h3 class="project-name">程式設計入門</h3>
-          <p class="project-description">
-            熟悉 HTML、CSS、JavaScript，設計並開發具響應式特性的網站。<br>
-            理解基本 DOM 操作、表單驗證及與 API 的基礎整合。<br>
-            與工程團隊無縫溝通，確保技術需求順利落地。
-          </p>
-        </div>
-        
+      </div>
+  
          <hr>
         
          <div class="project">
@@ -381,8 +357,8 @@
         </div>
            
          <hr>
-        
-         <div class="project">
+      
+      <div class="project">
          <a href="https://e-info.org.tw/node/217545" target="_blank">
   <h3 class="project-name">卓媽媽綠能流浪狗之家</h3>
 </a>
@@ -397,39 +373,30 @@
           </p>
         </div>
       </div>
-    </section>   
-      
-        <!-- 證照 -->
+    </section>
+
     <section class="Certificate-section">
-       <h2>證照及認證</h2>
-        <hr>
-       <div class="Certificate">
+      <h2>證照及認證</h2>
+      <hr>
+      <div class="Certificate">
         <div class="Cert">
           <h3 class="Cert-name">Toeic</h3>
-          <p class="skill-description">
-            550分
-          </p>
+          <p>550分</p>
         </div>
-      
-          <div class="Certificate">
         <div class="Cert">
-          <h3 class="Cert-name">UX三刀流使用者體驗設計課程</h3>
-          <p class="skill-description">
-            國立台北商業大學 溫明輝副教授2024秋季班學程
-          </p>
+          <h3 class="Cert-name">UX三刀流</h3>
+          <p>國立台北商業大學 溫明輝副教授2024秋季班</p>
         </div>
-      
-              <div class="Certificate">
         <div class="Cert">
           <h3 class="Cert-name">Google Analytics (GA4)</h3>
-          <p class="skill-description">
-           Get Started using Google Analytics (GA4)
-          </p>
-        </div> 
-        
-            
-    </section> 
+          <p>Get Started using Google Analytics (GA4)</p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    © 2025 陳冠伯. All rights reserved.
+  </footer>
 </body>
 </html>
-
